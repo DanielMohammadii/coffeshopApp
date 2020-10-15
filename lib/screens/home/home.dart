@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
-          title: Text('Brew Crew'),
+          title: Text('Brew'),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           actions: <Widget>[
