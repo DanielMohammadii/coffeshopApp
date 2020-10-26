@@ -40,7 +40,7 @@ class DataBaseService {
 
   //Convert Snapshot to UserData models.
   UserData _userSnapShot(DocumentSnapshot snapshot) {
-    UserData(
+    return UserData(
         sugars: snapshot.data()['Sugars'],
         name: snapshot.data()['Name'],
         strength: snapshot.data()['Strength'],

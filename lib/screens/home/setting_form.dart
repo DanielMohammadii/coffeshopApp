@@ -45,7 +45,7 @@ class _SettingFormState extends State<SettingForm> {
                       onChanged: (val) => setState(() => _currentName = val),
                     ),
                     SizedBox(
-                      height: 30.0,
+                      height: 10.0,
                     ),
                     //DropDown for Choosing Sugars
                     DropdownButtonFormField(
@@ -61,7 +61,7 @@ class _SettingFormState extends State<SettingForm> {
                       onChanged: (val) => setState(() => _currentSugar = val),
                     ),
                     SizedBox(
-                      height: 30.0,
+                      height: 10.0,
                     ),
                     Text(
                       "DoubleShot : 2 \nOneShot :      1",
@@ -72,18 +72,14 @@ class _SettingFormState extends State<SettingForm> {
                     ),
                     //Slider to Choosing the kind of Coffee : one Shot or Double Shot
                     Slider(
-                      min: 1,
-                      max: 2,
-                      divisions: 2,
-                      activeColor: Colors.brown,
-                      inactiveColor: Colors.brown,
                       value: (_currentStrength ?? userData.strength).toDouble(),
-                      label: _currentStrength.toString(),
-                      onChanged: (val) {
-                        setState(() {
-                          _currentStrength = val.round();
-                        });
-                      },
+                      activeColor: Colors.brown[600],
+                      inactiveColor: Colors.brown[200],
+                      min: 100,
+                      max: 600,
+                      divisions: 5,
+                      onChanged: (val) =>
+                          setState(() => _currentStrength = val.round()),
                     ),
                     SizedBox(
                       height: 50.0,
@@ -92,9 +88,14 @@ class _SettingFormState extends State<SettingForm> {
                     RaisedButton.icon(
                       color: Colors.brown[500],
                       onPressed: () async {
-                        print(_currentName);
-                        print(_currentSugar);
-                        print(_currentStrength);
+                        if (_formkey.currentState.validate()) {
+                          await DataBaseService(uid: user.uid).updateUserData(
+                            _currentSugar ?? userData.sugars,
+                            _currentName ?? userData.name,
+                            _currentStrength ?? userData.strength,
+                          );
+                          Navigator.pop(context);
+                        }
                       },
                       icon: Icon(
                         Icons.done,
@@ -106,7 +107,7 @@ class _SettingFormState extends State<SettingForm> {
                           color: Colors.white,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ));
           } else {
